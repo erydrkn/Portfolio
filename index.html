@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eray Durukan — Portfolio</title>
+  <meta name="description" content="Full‑stack developer portfolio: C#, Windows Forms, ASP.NET Core, MSSQL, SQL Server – TSQL, ENTITY FRAMEWORK CORE, MongoDB.">
+  <meta name="theme-color" content="#080a0f" />
+  <style>
+    :root{
+
+      --bg:#080a0f; --panel:#0f1629; --text:#e6e9f2; --muted:#9aa4b2; --brand:#7c5cff; --brand-2:#00d4ff;
+      --radius:24px; --shadow:0 10px 30px rgba(0,0,0,.35);
+
+      --bg-grad:
+        radial-gradient(1200px 800px at 80% -10%, rgba(20,24,36,.35), transparent 60%),
+        radial-gradient(900px 600px at -10% 20%, rgba(10,14,22,.4), transparent 60%),
+        var(--bg);
+    }
+    :root[data-theme="light"]{
+      --bg:#f7f8fb; --panel:#ffffff; --text:#0a1020; --muted:#51607a;
+      --shadow:0 10px 30px rgba(13,29,68,.15);
+      --bg-grad:
+        radial-gradient(900px 600px at 10% -20%, rgba(255,255,255,.65), transparent 45%),
+        var(--bg);
+    }
+    @media (prefers-color-scheme: light){
+      :root:not([data-theme]){ 
+        color-scheme: light;
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;scroll-behavior:smooth;background: var(--bg-grad);}
+    body{color:var(--text);font:500 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));backdrop-filter: blur(10px);border:1px solid rgba(255,255,255,.06);box-shadow:var(--shadow);border-radius:var(--radius)}
+    .pill{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(124,92,255,.12);border:1px solid rgba(124,92,255,.25);border-radius:999px;color:#dcd6ff}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:var(--panel);transition:.2s;box-shadow:var(--shadow)}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.brand {
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#ffffff !important;
+      font-weight:800;
+    }
+    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+    .col-4 .thumb { margin-bottom: 6px; }
+    .col-4 .muted { margin-top: 0 !important; }
+    .col-3{grid-column:span 3} .col-4{grid-column:span 4} .col-6{grid-column:span 6} .col-8{grid-column:span 8} .col-12{grid-column:span 12}
+    @media (max-width: 880px){.col-3,.col-4,.col-6,.col-8{grid-column:span 12}}
+
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg, rgba(11,15,25,.85), rgba(11,15,25,.45));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.3px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 0 4px rgba(124,92,255,.25)}
+    .menu{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    header{
+      position:sticky;top:0;z-index:50;
+      background:linear-gradient(180deg, rgba(11,15,25,.85), rgba(11,15,25,.45));
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+    @media (min-width: 680px){
+      body{
+        padding-top: 70px; 
+      }
+    }
+    :root[data-theme="light"] header{
+      background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+      border-bottom:1px solid rgba(10,16,32,.06);
+    }
+
+    :root[data-theme="light"] .menu .btn[data-tab] {
+      color:#0a1020;
+      border-color:rgba(10,16,32,.12);
+      background:transparent;
+    }
+
+    :root[data-theme="light"] .menu .btn[data-tab].active {
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#fefefe; 
+      font-weight:800;
+    }
+
+    :root[data-theme="light"] .menu .btn[data-tab].active{
+      color:#0a1020;
+
+    }
+
+
+    :root[data-theme="light"] .pill{
+      color:#2d245f;                           
+      background:rgba(124,92,255,.10);
+      border-color:rgba(124,92,255,.30);
+      font-weight:600;                          
+    }
+
+    :root[data-theme="light"] .stat {
+      background: rgba(0,0,0,.04);              
+      border: 1px solid rgba(0,0,0,.08);
+      color: #0a1020;
+    }
+
+
+    :root[data-theme="light"] .tl-item {
+      background: rgba(0,0,0,.02);
+      border: 1px solid rgba(0,0,0,.08);
+      color: #0a1020;
+    }
+    :root[data-theme="light"] .tl-row img.logo {
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,.08); 
+    }
+
+    :root[data-theme="dark"] .tl-row img.logo {
+      background: #ffffff;
+    }
+
+    :root[data-theme="light"] .card,
+    :root[data-theme="light"] .glass,
+    :root[data-theme="light"] .talk-card {
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,.08);
+      color:#0a1020;
+    }
+
+    :root[data-theme="light"] .tag {
+      background: rgba(0,0,0,.04);
+      border: 1px solid rgba(0,0,0,.08);
+      color: #51607a;                       
+    }
+
+    .menu .btn[data-tab]{background:transparent;border-color:rgba(207, 199, 199, 0.12); color:#fefefe;}
+    .menu .btn[data-tab].active{background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#fefefe;font-weight:800}
+    .tab-section{animation:fade .25s ease}
+    .hide{display:none}
+    @keyframes fade{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+
+    .hero{padding:56px 0}
+    .hero .title{font-weight:900;letter-spacing:.3px;line-height:1.15;margin:12px 0 16px;font-size: clamp(36px, 6vw, 58px)}
+    .hero .subtitle{color:var(--muted);font-size:clamp(16px, 2vw, 18px)}
+    .stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px}
+    .stat{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09)}
+
+
+    .cards{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .card{grid-column: span 4; padding:14px; border-radius:18px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); transition:.2s; min-height:200px}
+    .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .card .thumb{
+      border-radius:14px;
+      overflow:hidden;
+      aspect-ratio:16/9;
+      background:#0c1222;
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .card .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;   
+      display:block;
+    }
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .tag{padding:6px 10px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(255,255,255,.04);font-size:12px;color:var(--muted)}
+    @media (max-width: 1000px){.card{grid-column: span 6}} @media (max-width: 680px){.card{grid-column: span 12}}
+
+    .timeline{position:relative;padding-left:24px}
+    .timeline:before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--brand), var(--brand-2))}
+    .tl-item{position:relative;margin:10px 0;padding:12px 14px 12px 18px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.04)}
+    .tl-item:before{content:"";position:absolute;left:-2px;top:16px;width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 0 4px rgba(124,92,255,.25)}
+    .tl-row{display:flex;gap:12px;align-items:flex-start}
+    .tl-row img.logo{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:#0b0f19}
+
+    footer{margin-top:44px;padding:30px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--muted)}
+
+
+    .type-cursor{display:inline-block;width:1ch;animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    .socials{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .socials a{ line-height:0; display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);box-shadow:var(--shadow)}
+    .socials a svg{ width:20px; height:20px; display:block; }
+    .socials a:hover{ transform: translateY(-2px); }
+    .socials a[aria-label="LinkedIn"] svg {
+      transform: translateY(2px); 
+    }
+
+
+
+    
+    .talk-card {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 14px;
+      align-items: center;
+      position: relative; 
+    }
+
+    .talk-card .thumb{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08);aspect-ratio:4/3;background:#0c1222}
+    .talk-card small{color:var(--muted)}
+
+
+    .talk-card .logos {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .talk-card .logos img {
+      background:#ffffff;        
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:4px;
+      padding:3px;
+      height:40px;
+      width:auto;
+      object-fit:contain;
+      box-shadow:0 1px 3px rgba(0,0,0,.15);
+    }
+
+
+    .fade-up{opacity:0;transform:translateY(14px);transition:opacity .35s ease, transform .35s ease}
+    .fade-up.in{opacity:1;transform:none}
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px; 
+    }
+
+    @media (max-width: 680px){
+      .section-head{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;  
+      }
+      .section-head .section-title{
+        margin:0;          
+      }
+      .section-head .muted{
+        display:block;         
+        margin:0;   
+      }
+    }
+
+
+    .info-card{
+      margin-top: 20px;
+      grid-column: span 12;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:18px;
+      border-radius:16px;
+      background:rgba(124,92,255,.08);
+      border:1px solid rgba(124,92,255,.25);
+      font-size:15px;
+      line-height:1.5;
+      color:var(--text);
+    }
+    .info-card svg{
+      width:22px;
+      height:22px;
+      flex-shrink:0;
+      color:var(--brand);
+    }
+    :root[data-theme="light"] .info-card{
+      background:rgba(124,92,255,.1);
+      border-color:rgba(124,92,255,.3);
+      color:#0a1020;
+    }
+
+    .stat{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .stat svg{
+      width:20px;
+      height:20px;
+      flex-shrink:0;
+      color:var(--brand);
+    }
+    .card { position: relative; padding-bottom: 64px; } 
+.card .card-footer{
+  position:absolute; left:14px; right:14px; bottom:12px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+
+:root[data-theme="light"] footer{
+  border-top: 1px solid rgba(10,16,32,.12); 
+}
+
+.badge{
+  display:inline-flex; align-items:center; gap:8px;
+  height:28px; padding:0 12px; border-radius:999px;
+  font-size:12px; font-weight:700; letter-spacing:.2px;
+  color:#fff; user-select:none; white-space:nowrap;
+  box-shadow: var(--shadow);
+  border:1px solid rgba(255,255,255,.18);
+}
+.badge.owned{
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+}
+.badge.contrib{
+  background: #10b981; 
+  border-color: rgba(0,0,0,.08);
+}
+.badge.canceled{
+  background:#ef4444; 
+  border-color:rgba(0,0,0,.15);
+  color:#fff;
+}
+
+.actions{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.mini-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  height:30px; padding:0 10px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background: var(--panel);
+  color: var(--text); font-size:12px; font-weight:600;
+  transition:.2s; box-shadow: var(--shadow);
+}
+.mini-btn:hover{ transform: translateY(-2px); }
+
+
+:root[data-theme="light"] .mini-btn{
+  background:#fff; border-color:rgba(0,0,0,.1);
+}
+:root[data-theme="light"] .badge.contrib{
+  border-color:rgba(0,0,0,.08);
+}
+.project-year{
+  margin: 6px 4px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.project-year::before{
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+}
+@media (max-width: 680px){
+  header{
+    position: static; 
+    backdrop-filter: none; 
+  }
+}
+  </style>
+</head>
+<body>
+<header>
+<div class="container nav">
+<a href="http://127.0.0.1:5500/index.html#about" class="brand" aria-label="Home">
+<span class="dot"></span>
+<span>Eray Durukan BSc.<br><small style='font-weight:500;color:var(--muted)'>Full‑Stack Engineer</small></span>
+</a>
+<nav class="menu">
+<button class="btn active" data-tab="about">About</button>
+<button class="btn" data-tab="work">Employment & Education</button>
+<button class="btn" data-tab="projects">Projects</button>
+<button id="themeBtn" class="btn" aria-label="Toggle theme">🌗</button>
+</nav>
+</div>
+</header>
+
+<main id="top" class="container">
+  <section class="tab-section" id="tab-about">
+    <section class="hero row">
+      <div class="col-8">
+        <span class="pill">Izmir · Turkey</span>
+        <h1 class="title" id="typeTitle">·Full-Stack Developer ·.NET Developer ·Software Architect ·Database Specialist</h1>
+        <p class="subtitle" id="typeSub">C# · WINDOWS FORMS · ASP.NET CORE · MSSQL/MySQL · SQL Server – TSQL · ENTITY FRAMEWORK CORE · MongoDB · More</p>
+        <div class="stats">
+
+          
+        </div>
+        <div class="row" style="margin-top:18px">
+          <div class="col-12" style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn brand" data-tab-jump="projects">See Projects</a>
+            <a class="btn" data-tab-jump="work">Inspect Experience</a>
+           <a class="btn" data-tab-jump="cv">View Resume</a>
+          </div>
+        </div>
+
+        <div style="margin-top:28px" class="glass">
+          <div style="padding:16px">
+            <h3 style="margin:4px 0 12px">Contact / Connect</h3>
+            <div class="socials">
+              <a aria-label="LinkedIn" href="https://www.linkedin.com/in/eray-durukan-b34890269/" target="_blank" rel="noopener" title="LinkedIn">
+                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true">
+                  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175A1.146 1.146 0 010 14.854V1.146zM4.943 13.394V6.169H3.127v7.225h1.816zm-.91-8.207c.607 0 1.004-.406 1.004-.914 0-.519-.397-.914-1.015-.914-.618 0-1.004.395-1.004.914 0 .508.386.914 1.004.914zM8.94 13.394h1.815V9.359c0-.217.016-.434.08-.588.176-.434.577-.885 1.25-.885.883 0 1.237.667 1.237 1.646v3.862h1.815V9.26c0-2.22-1.185-3.252-2.766-3.252-1.274 0-1.845.7-2.165 1.193h.016V6.169H8.94c.023.662 0 7.225 0 7.225z"/>
+                </svg>
+              </a>
+              <a aria-label="GitHub" href="#" target="_blank" rel="noopener" title="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.35-1.76-1.35-1.76-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.84 1.32 3.53 1.01.11-.79.42-1.32.76-1.63-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.39 1.24-3.24-.12-.3-.54-1.52.12-3.16 0 0 1.01-.32 3.3 1.24a11.5 11.5 0 0 1 6 0c2.29-1.56 3.3-1.24 3.3-1.24.66 1.64.24 2.86.12 3.16.77.85 1.24 1.93 1.24 3.24 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5Z"/></svg>
+              </a>              
+              <a aria-label="WhatsApp" href="#" target="_blank" rel="noopener" title="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.47A11.9 11.9 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.1.55 4.13 1.6 5.92L0 24l6.22-1.63A11.9 11.9 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.2-1.25-6.2-3.48-8.53ZM12 21.5c-1.86 0-3.63-.5-5.18-1.45l-.37-.22-3.69.97.99-3.59-.24-.38A9.5 9.5 0 1 1 21.5 12 9.46 9.46 0 0 1 12 21.5Zm5.25-6.4c-.29-.15-1.72-.85-1.98-.94-.26-.1-.45-.15-.64.15-.19.29-.74.94-.9 1.14-.17.19-.33.21-.62.06-.29-.16-1.22-.45-2.32-1.45-.86-.76-1.45-1.7-1.62-1.99-.17-.29-.02-.45.13-.6.13-.13.29-.33.43-.49.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.54-.88-2.1-.23-.56-.47-.48-.64-.49h-.55c-.19 0-.49.07-.75.36-.26.29-1 1-1 2.43 0 1.43 1.02 2.81 1.16 3 .14.19 2 3.06 4.85 4.29.68.29 1.21.46 1.63.59.69.22 1.31.19 1.8.12.55-.08 1.72-.7 1.96-1.38.24-.69.24-1.28.17-1.4-.07-.12-.26-.19-.55-.34Z"/></svg>
+              </a>
+              <span class="muted">eraydurukan48@hotmail.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass" style="padding:16px">
+          <div class="thumb" aria-hidden="true" style="aspect-ratio:16/9">
+            <img src="assets/images/eray.jpg" alt="Portrait placeholder" />
+          </div>
+          <div class="muted" style="font-size:15px; font-weight:300; margin-bottom:10px; margin-top:10px;">April 8, 1999</div>
+          <div class="muted" style="font-size:16px">Eray is a computer engineer working in full-stack development. He has experience developing software using technologies such as C#, ASP.NET Core, MSSQL, and Windows Forms. He aims to be productive in a professional work environment, prioritizing teamwork and effective communication.</div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section class="tab-section hide" id="tab-work">
+    <div class="section-head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h2 class="section-title">Employment & Education</h2>
+      <span class="muted">Professional roles and academic background</span>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h3>Experience</h3>
+        <div class="timeline" id="workTL"></div>
+      </div>
+      <div class="col-6">
+        <h3>Education</h3>
+        <div class="timeline" id="eduTL"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab-section hide" id="tab-projects">
+    <div class="section-head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h2 class="section-title">Owned / Engaged Projects</h2>
+      <span class="muted"></span>
+    </div>
+    <div class="cards" id="projectGrid"></div>
+    <div class="info-card fade-up">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm-.25-11h.5a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5Zm.25 2a.75.75 0 0 0-.75.75v5.5a.75.75 0 0 0 1.5 0v-5.5A.75.75 0 0 0 12 11Z"/>
+      </svg>
+
+    </div>
+  </section>
+
+  <section class="tab-section hide" id="tab-talks">
+    <div class="section-head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h2 class="section-title">Speeches</h2>
+      <span class="muted">Tech talks, workshops, seminars</span>
+    </div>
+    <div id="talkList" class="row"></div>
+  </section>
+  <section class="tab-section hide" id="tab-cv">
+  <div style="display:flex;justify-content:center;align-items:center;flex-direction:column;gap:16px">
+    <h2>Resume / CV</h2>
+    <div style="width:100%;max-width:900px;aspect-ratio:1/1.3;border:2px solid #000;border-radius:12px;overflow:hidden;background:#000">
+      <iframe src="assets/pdf/CV_Eray_Durukan.pdf" style="width:100%;height:100%;border:none" title="Egemen Öner CV"></iframe>
+    </div>
+    <p style="margin-top:12px;font-size:14px">
+      If the PDF is not visible, <a href="assets/pdf/CV_Eray_Durukan.pdf" target="_blank" rel="noopener" class="btn brand" style="padding:8px 12px;font-size:14px">Open in new tab</a>
+    </p>
+  </div>
+</section>
+</main>
+
+<section class="tab-section hide" id="tab-papers">
+  <div class="section-head" style="margin-bottom:16px">
+  </div>
+  <div style="padding:40px 0;text-align:center">
+    <h1 class="fade-up">Soon!</h1>
+  </div>
+</section>
+
+<footer>
+  <div class="container">Eray Durukan, BSc - Building technology with passion.</div>
+</footer>
+
+<script>
+  const DATA = {
+    cvUrl: "#",
+    socials: {
+      linkedin: "https://www.linkedin.com/in/eray-durukan-b34890269/",
+      github: "https://github.com/erydrkn",      
+      whatsapp: "https://wa.me/5548896060"
+    },
+    projects: [
+  { 
+    title: "Special Topics in Computer Engineering — VR Game Project", 
+    blurb: "I developed a VR-supported survival game on the Unity platform featuring 3D AI zombies, using C# for scripting. The game takes place in a dark room where players must survive indefinitely against waves of zombies. As zombies are defeated, they respawn in increasing numbers. I integrated realistic zombie sound effects and provided players with various weapons, including a machine gun, knife, and katana, all within a first-person perspective for an immersive experience.",
+    type: "owned",
+    year: "2024",
+    img: "assets/images/Vr-Zombie-game.png", 
+    tags: ["Unity", "C#", "VR", "AI", "3D Game Development"]
+  },
+  { 
+    title: "Embedded Systems — Smart Safe Lockery Project", 
+    blurb: "A password-protected smart safe system developed using Arduino. It features an LCD screen, keypad, RGB LED, buzzer, MPU6050 motion sensor, SD card module, and a servo motor-based locking mechanism. The system detects motion, triggers an alarm, and logs activities to the SD card. The lock opens and closes with the user-defined password, offering enhanced security.",
+    type: "owned",
+    year: "2023",
+    img: "assets/images/SmartSafe-Lockery-Project.png", 
+    tags: ["Arduino", "Embedded Systems", "C/C++", "Sensors", "Servo Motor"]
+  },
+  { 
+    title: "WEBFAT — Diet Planning Application", 
+    blurb: "A web-based diet planning and tracking application currently under development. Built with PHP-Laravel  and MySql, it allows users to manage meal plans, calories, and nutrition details efficiently through a clean Bootstrap-based interface.",
+    type: "owned",
+    year: "2024",
+    img: "assets/images/WEBFAT.png", 
+    tags: ["PHP", "Laravel", "HTML", "CSS", "JavaScript", "Bootstrap", "AJAX", "MySql", "jQuery"]
+  },
+  { 
+    title: "Console Application Sales System Project — .NET Core", 
+    blurb: "A collection of console applications developed using C# and .NET Core. These projects focus on backend logic, data structures, CRUD operations, and database integration with MSSQL. Designed to strengthen programming fundamentals and backend development skills.",
+    type: "owned",
+    year: "2025",
+    img: "assets/images/console_app.jpg", 
+    tags: [".NET Core", "C#", "OOP", "Windows Forms", "MSSQL", "Console Development"]
+  },
+  { 
+    title: "ASP.NET Core Web Application Project(E-commerce)", 
+    blurb: "A dynamic full-stack web application developed using ASP.NET Core MVC architecture. The project includes responsive UI with Bootstrap, asynchronous data operations using AJAX, and database communication through MSSQL and Entity Framework Core. It aims to demonstrate solid backend and frontend integration skills.",
+    type: "owned",
+    year: "Ongoing",
+    img: "assets/images/aspnet_webapp.jpg", 
+    tags: ["ASP.NET Core", "C#", "MSSQL", "Bootstrap", "AJAX", "Entity Framework Core", "Full-Stack Development"]
+  }
+],
+
+    work: [
+  { 
+    when: "2023", 
+    role: "Intern", 
+    org: "Adres Gezgini – İzmir", 
+    logo: "assets/images/adresgezgini-logo.png",
+    bullets: [
+      "During my 2-month internship at Adres Gezgini, I actively worked with the software development and R&D teams.",
+      "I participated in designing websites for various clients and contributed to several web and advertising projects.",
+      "Additionally, I gained experience in software development processes and project management within the team."
+    ]
+  },
+  { 
+    when: "Will be official on November 2025", 
+    role: "Development Specialist", 
+    org: "Nullware Digital", 
+    logo: "https://www.nullwaredigital.com/assets/nullware-logo.png",
+    bullets: [
+      "Developing with the team of 5 to design, create, and serve mobile / web / desktop apps and reach the target audiences.",
+      "6 apps are produced on Google Play Store, while 3 apps are published on App Store.",
+      "More than 10,000 downloads were received, and 3 different monetisation models were developed with ads, IAP, and Stripe."
+    ]
+  }
+],
+    education: [
+      { when: "September 2018 — June 2024", title: "BSc. Computer Engineering", inst: "Yaşar University", logo: "assets/images/yasar_logo.png" },
+      { when: "May 2025 — December 2025", title: ".NET Developer – Software and Database Expertise", inst: "İAkademi(Microsoft Partner)", logo: "assets/images/İAkademiLogo.png" }
+    ],
+    talks: [
+      { when: "July 2025", title: "Secure by Design Requirement", event: "Funded Project Representation", desc: "Amongst the 180 guests and exhibitors, were Cyber Security colleagues from Bournemouth University showcasing three Dstl funded projects covering areas like human factors, risk informed decision making, and cyber resilience.", img: "assets/images/battleLab.jpg", href: "https://www.linkedin.com/feed/update/urn:li:activity:7346253653286043648/", poweredBy: "BattleLab Dorset", logos: ["assets/images/battleLab_logo.png", "assets/images/bu_logo.png"]},
+      { when: "May 2025", title: "Backend as a Service (BaaS) Technologies and Changing Software Development Processes", event: "Webinar", desc: "Upon special invitation, I had the opportunity to summarise and introduce NoSQL-based Backend as a Service concept and technologies, which have no place in university curricula and which I also use in my own projects.", img: "assets/images/BaaSWebinar.jpg", href: "https://www.linkedin.com/feed/update/urn:li:activity:7328130723406602240/", poweredBy: 'Pagit Devers Web & Mobile App Development Club Manisa Celal Bayar University', logos: ["assets/images/celalbayar_logo.png"]},
+      { when: "April 2025", title: "Introduction to Self-Employment and Corporatisation in the Software Industry", event: "Seminar", desc: "In this seminar, me and my colleague Efe summarised the processes such as earning your own money in the software industry, indie development, payment methods, and establishing a company, presented to Yaşar University students.", img: "assets/images/HSDpresentation.png", href: "https://www.linkedin.com/feed/update/urn:li:activity:7315462874850639873/", poweredBy: "Huawei Student Developers (HSD) Yaşar University", logos: ["assets/images/hsd_logo.jpg", "assets/images/yasar_logo.png"]},
+      { when: "November 2023", title: "Passive Income with Google AdMob & AdSense", event: "Seminar", desc: "In this seminar, I explained in detail how Google AdMob and AdSense ads, which I also used in my own projects at the time, worked and generated revenue, and demonstrated how they could be integrated into web and mobile applications.", img: "assets/images/gdscAdMobAdSense.jpg", href: "https://www.instagram.com/p/CzMxeYNtkNq/?img_index=1", poweredBy: "Google Developer Groups (GDG) on Campus Yaşar University", logos: ["assets/images/gdsc_logo.png", "assets/images/yasar_logo.png"]},
+      { when: "April 2023", title: "Internship Experiences", event: "Webinar", desc: "As Yaşar University Campus GDG core team members, we held a webinar where we explained in detail how our professional internships progress and what processes we go through, and we provided guidance to the students.", img: "assets/images/internship.png", href: "https://www.youtube.com/watch?v=AtVoAWkckc8", poweredBy: "Google Developer Groups (GDG) on Campus Yaşar University", logos: ["assets/images/gdsc_logo.png", "assets/images/yasar_logo.png"]},
+    ]
+  };
+
+  function animateWorkEdu(){
+    const items = document.querySelectorAll('#workTL .fade-up, #eduTL .fade-up');
+    items.forEach(el => el.classList.remove('in'));
+    void document.body.offsetHeight;
+    items.forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), 60 + i * 80);
+    });
+  }
+
+const grid = document.getElementById('projectGrid');
+grid.innerHTML = '';
+
+DATA.projects.forEach(p=>{
+  const el = document.createElement('article');
+  el.className = 'card fade-up';
+
+  const tagsHtml = (p.tags || []).map(t=>`<span class="tag">${t}</span>`).join('');
+  const type = (p.type || (p.owned ? 'owned' : 'contrib')).toLowerCase();
+  let badgeLabel = '';
+  let badgeClass = '';
+
+  if(type === 'owned'){
+    badgeLabel = 'Owned';
+    badgeClass = 'owned';
+  } else if(type === 'contrib'){
+    badgeLabel = 'Contributed';
+    badgeClass = 'contrib';
+  } else if(type === 'canceled'){
+    badgeLabel = 'Canceled';
+    badgeClass = 'canceled';
+  }
+
+  const badgeHtml = badgeLabel 
+    ? `<span class="badge ${badgeClass}">${badgeLabel}</span>` 
+    : '';
+  const links = Array.isArray(p.links) ? p.links : (p.href ? [{ label:'Open', href:p.href }] : []);
+  const actionsHtml = links.map(l=>`
+    <a class="mini-btn" href="${l.href}" target="_blank" rel="noopener">
+      ${l.icon ? `<span aria-hidden="true">${l.icon}</span>` : ''}${l.label}
+    </a>
+  `).join('');
+
+  const yearHtml = p.year ? `<div class="project-year">${p.year}</div>` : '';
+
+  el.innerHTML = `
+    <div class="thumb"><img alt="${p.title}" src="${p.img}"></div>
+    <h3 style="margin:10px 4px 6px">${p.title}</h3>
+    <p class="muted" style="margin:0 4px 8px; font-weight:200;">${p.blurb}</p>
+    ${yearHtml}
+    <div class="tags">${tagsHtml}</div>
+    <div class="card-footer">
+      ${badgeHtml}
+      <div class="actions">${actionsHtml}</div>
+    </div>
+  `;
+  grid?.appendChild(el);
+});
+
+  // Work & Education
+  const workTL = document.getElementById('workTL');
+  const eduTL = document.getElementById('eduTL');
+DATA.work.forEach(x=>{
+  const el = document.createElement('div');
+  el.className = 'tl-item fade-up';
+
+  const isPresent = /present/i.test(x.when);
+  const bulletsHtml = x.bullets.map(b=>`<li>${b}</li>`).join('');
+  const leaveHtml = (!isPresent && x.leaveReason)
+    ? `<div class="muted" style="margin-top:8px;font-size:.9em">
+         <em>Leave reason:</em> ${x.leaveReason}
+       </div>`
+    : '';
+
+  el.innerHTML = `
+    <div class="tl-row">
+      <img class="logo" src="${x.logo || '/logos/dummy.svg'}" alt="${x.org} logo" />
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <strong>${x.role}</strong>
+          <span class="muted" style="font-weight:200;">${x.when} · ${x.org}</span>
+        </div>
+        <ul style="margin:8px 0 0 18px">${bulletsHtml}</ul>
+        ${leaveHtml}
+      </div>
+    </div>`;
+  workTL?.appendChild(el);
+});
+DATA.education.forEach(e=>{
+  const el = document.createElement('div');
+  el.className='tl-item fade-up';
+  el.innerHTML = `
+    <div class="tl-row">
+      <img class="logo" src="${e.logo}" alt="logo" />
+      <div style="flex:1">
+        <div><strong>${e.title}</strong></div>
+        <div style="font-weight:300">${e.inst}</div>
+        <div style="color:var(--muted);font-size:0.9em">${e.when}</div>
+        ${e.gpa ? `<div style="margin-top:4px;color:var(--muted);font-size:0.9em"><b>Grade Point Average:</b> ${e.gpa}</div>` : ""}
+      </div>
+    </div>`;
+  eduTL?.appendChild(el);
+});
+
+  const talkList = document.getElementById('talkList');
+DATA.talks.forEach(t=>{
+  const wrap = document.createElement('div');
+  wrap.className = 'col-6 fade-up';
+  wrap.innerHTML = `
+    <div class="glass talk-card" style="padding:16px; flex-direction:column; gap:12px; position:relative">
+      <div>
+        <strong>${t.title}</strong><br/>
+        <small>${t.desc || ''}</small><br/>
+        <small>${t.when} · ${t.event}</small>
+        ${t.poweredBy ? `<div class="muted" style="margin-top:6px;font-size:.85em">Powered by <b>${t.poweredBy}</b></div>` : ''}
+        <div style="margin-top:10px">
+          <a href="${t.href}" target="_blank" rel="noopener" class="btn brand" style="font-size:14px;padding:6px 12px">See Details</a>
+        </div>
+      </div>
+      <div class="thumb"><img alt="${t.title}" src="${t.img || ''}"></div>
+      ${t.logos && t.logos.length ? `
+        <div class="logos">
+          ${t.logos.map(l=>`<img src="${l}" alt="logo"/>`).join('')}
+        </div>` : ''}
+    </div>`;
+  talkList?.appendChild(wrap);
+});
+
+
+  const themeBtn = document.getElementById('themeBtn');
+
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme', t);
+
+    document.documentElement.style.setProperty('color-scheme', t);
+
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if(meta){
+      meta.setAttribute('content', t === 'light' ? '#f7f8fb' : '#080a0f');
+    }
+    localStorage.setItem('theme', t);
+  }
+
+  (function initTheme(){
+    const saved = localStorage.getItem('theme');
+    const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    const initial = saved || (systemPrefersLight ? 'light' : 'dark');
+    applyTheme(initial);
+  })();
+
+  themeBtn.addEventListener('click', ()=>{
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
+
+
+const sections = {
+  about: document.getElementById('tab-about'),
+  work: document.getElementById('tab-work'),
+  projects: document.getElementById('tab-projects'),
+  talks: document.getElementById('tab-talks'),
+  papers: document.getElementById('tab-papers'),
+  cv: document.getElementById('tab-cv') 
+};
+  const tabBtns = Array.from(document.querySelectorAll('[data-tab]'));
+  function showTab(name){
+    Object.entries(sections).forEach(([k,el])=> el.classList.toggle('hide', k!==name));
+    tabBtns.forEach(b=> b.classList.toggle('active', b.getAttribute('data-tab')===name));
+    history.replaceState(null, '', `#${name}`);
+
+    if(name==='projects'){
+      document.querySelectorAll('#projectGrid .fade-up, #tab-projects .info-card.fade-up')
+        .forEach((c,i)=> setTimeout(()=> c.classList.add('in'), 60 + i*80));
+    }
+    if(name==='talks'){
+      document.querySelectorAll('#talkList .fade-up').forEach((c,i)=> setTimeout(()=> c.classList.add('in'), 60 + i*80));
+    }
+    if(name==='work'){          
+      animateWorkEdu();           
+    }
+    if(name==='papers'){
+      document.querySelectorAll('#tab-papers .fade-up').forEach((c,i)=> 
+        setTimeout(()=> c.classList.add('in'), 60 + i*80)
+      );
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  tabBtns.forEach(b=> b.addEventListener('click', ()=> showTab(b.getAttribute('data-tab'))));
+  document.querySelectorAll('[data-tab-jump]').forEach(el=> el.addEventListener('click', ()=> showTab(el.getAttribute('data-tab-jump'))));
+  const initial = location.hash?.replace('#','') || 'about';
+  if(sections[initial]) showTab(initial); else showTab('about');
+
+
+  const socialMap = {
+    'LinkedIn': DATA.socials.linkedin,
+    'GitHub': DATA.socials.github,
+    'Instagram': DATA.socials.instagram,
+    'WhatsApp': DATA.socials.whatsapp
+  };
+  document.querySelectorAll('.socials a[title]')
+    .forEach(a=>{ const key=a.getAttribute('title'); if(socialMap[key]) a.href = socialMap[key]; });
+
+  function typewriter(el, text, speed=18){
+    el.textContent='';
+    const cursor = document.createElement('span');
+    cursor.className='type-cursor';
+    cursor.textContent='|';
+    el.after(cursor);
+    let i=0; const id = setInterval(()=>{
+      el.textContent = text.slice(0, i++);
+      if(i>text.length){ clearInterval(id); setTimeout(()=>cursor.remove(), 600); }
+    }, speed);
+  }
+  const titleEl = document.getElementById('typeTitle');
+  const subEl = document.getElementById('typeSub');
+  typewriter(titleEl, titleEl.textContent, 14);
+  setTimeout(()=> typewriter(subEl, subEl.textContent, 12), 600);
+</script>
+</body>
+</html>
