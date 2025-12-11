@@ -403,6 +403,7 @@
             <a class="btn brand" data-tab-jump="projects">See Projects</a>
             <a class="btn" data-tab-jump="work">Inspect Experience</a>
            <a class="btn" data-tab-jump="cv">View Resume</a>
+           <a class="btn" data-tab-jump="certificates">Certificates</a>
           </div>
         </div>
 
@@ -488,6 +489,34 @@
     </p>
   </div>
 </section>
+
+
+<section class="tab-section hide" id="tab-certificates">
+  <div style="display:flex;justify-content:center;align-items:center;flex-direction:column;gap:24px">
+    <h2>Certificates</h2>
+
+    <!-- Certificate 1 -->
+    <div style="width:100%;max-width:900px;aspect-ratio:1/1.3;border:2px solid #000;border-radius:12px;overflow:hidden;background:#000">
+      <iframe src="assets/pdf/Certificate_Eray_Durukan.pdf" style="width:100%;height:100%;border:none" title="Certificate 1"></iframe>
+    </div>
+    <a href="assets/pdf/Certificate_Eray_Durukan.pdf" target="_blank" rel="noopener"
+       class="btn brand" style="padding:8px 12px;font-size:14px">
+      Open Certificate 1
+    </a>
+
+    <!-- Certificate 2 -->
+    <div style="width:100%;max-width:900px;aspect-ratio:1/1.3;border:2px solid #000;border-radius:12px;overflow:hidden;background:#000">
+      <iframe src="assets/pdf/Certificate2_Eray_Durukan.pdf" style="width:100%;height:100%;border:none" title="Certificate 2"></iframe>
+    </div>
+    <a href="assets/pdf/Certificate2_Eray_Durukan.pdf" target="_blank" rel="noopener"
+       class="btn brand" style="padding:8px 12px;font-size:14px">
+      Open Certificate 2
+    </a>
+
+  </div>
+</section>
+
+
 </main>
 
 <section class="tab-section hide" id="tab-papers">
@@ -753,7 +782,8 @@ const sections = {
   projects: document.getElementById('tab-projects'),
   talks: document.getElementById('tab-talks'),
   papers: document.getElementById('tab-papers'),
-  cv: document.getElementById('tab-cv') 
+  cv: document.getElementById('tab-cv'),
+  certificates: document.getElementById('tab-certificates') 
 };
   const tabBtns = Array.from(document.querySelectorAll('[data-tab]'));
   function showTab(name){
